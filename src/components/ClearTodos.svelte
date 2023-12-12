@@ -7,6 +7,4 @@
     on:click={clearCompleted}
     class:hidden={completedTodos === 0}
     class="clear-completed"
->
-    Clear completed
-</button>
+>Clear completed</button>

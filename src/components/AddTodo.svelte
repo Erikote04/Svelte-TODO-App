@@ -14,10 +14,10 @@
 <form on:submit|preventDefault={handleSubmit}>
     {#if todosAmount > 0}
         <input 
+            on:click={toggleCompleted}
             type="checkbox" 
             id="toggle-all" 
             class="toggle-all"
-            on:click={toggleCompleted}
         />
         <label aria-label="Mark all as complete" for="toggle-all">Mark all as complete</label>
     {/if}

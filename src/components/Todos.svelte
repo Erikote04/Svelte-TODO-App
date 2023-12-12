@@ -1,10 +1,10 @@
 <script>
-  import { tick } from 'svelte';
-	import Todo from './Todo.svelte';
-  import AddTodo from './AddTodo.svelte';
-  import TodosLeft from './TodosLeft.svelte';
-  import FilterTodos from './FilterTodos.svelte';
-  import ClearTodos from './ClearTodos.svelte';
+    import { tick } from 'svelte';
+    import Todo from './Todo.svelte';
+    import AddTodo from './AddTodo.svelte';
+    import TodosLeft from './TodosLeft.svelte';
+    import FilterTodos from './FilterTodos.svelte';
+    import ClearTodos from './ClearTodos.svelte';
 
     let todos = [
         { id: '1e4a59703af84', text: 'Todo 1', completed: true },
@@ -16,14 +16,12 @@
     let selectedFilter = 'all';
     let filtering = false;
 
-    // computed
     $: todosAmount = todos.length
     $: incompletedTodos = todos.filter((todo) => !todo.completed).length
     $: filteredTodos = filterTodos(todos, selectedFilter);
     $: completedTodos = todos.filter((todo) => todo.completed).length
     $: duration = filtering ? 0 : 250;
 
-    // methods
     function generateRandomId() {
 		return Math.random().toString(16).slice(2)
     }
@@ -46,55 +44,65 @@
     }
 
     function completeTodo(id) {
-      todos = todos.map((todo) => {
-        if (todo.id === id) {
-          todo.completed = !todo.completed
-        }
-        return todo
-      })
+        todos = todos.map((todo) => {
+            if (todo.id === id) {
+                todo.completed = !todo.completed
+            }
+            return todo
+        })
     }
 
     function removeTodo(id) {
-      todos = todos.filter((todo) => todo.id !== id);
+        todos = todos.filter((todo) => todo.id !== id);
     }
 
     function editTodo (id, newTodo) {
-      let currentTodo = todos.findIndex((todo) => todo.id === id);
-      todos[currentTodo].text = newTodo;
+        let currentTodo = todos.findIndex((todo) => todo.id === id);
+        todos[currentTodo].text = newTodo;
     }
 
     async function setFilter(newFilter) {
-      filtering = true;
-      await tick();
-      selectedFilter = newFilter;
-      await tick();
-      filtering = false;
+        filtering = true;
+        await tick();
+        selectedFilter = newFilter;
+        await tick();
+        filtering = false;
     }
 
     function filterTodos(todos, filter) {
-      switch (filter) {
-        case 'all':
-          return todos;
-        case 'active':
-          return todos.filter((todo) => !todo.completed);
-        case 'completed':
-          return todos.filter((todo) => todo.completed);
-      }
+        switch (filter) {
+            case 'all':
+                return todos;
+            case 'active':
+                return todos.filter((todo) => !todo.completed);
+            case 'completed':
+                return todos.filter((todo) => todo.completed);
+        }
     }
 
     function clearCompleted() {
-      todos = todos.filter((todo) => todo.completed !== true)
+        todos = todos.filter((todo) => todo.completed !== true)
     }
 </script>
 <main>
     <h1 class="title">TODO's</h1>
 
     <section class="todos">
-        <AddTodo {addTodo} {toggleCompleted} {todosAmount} />
+        <AddTodo 
+            {addTodo} 
+            {toggleCompleted} 
+            {todosAmount} 
+        />
         {#if todosAmount}
             <ul class="todo-list">
                 {#each filteredTodos as todo (todo.id)}
-                    <Todo {todo} {completeTodo} {removeTodo} {editTodo} {duration}/>
+                    <Todo 
+                        {todo} 
+                        {completeTodo} 
+                        {removeTodo} 
+                        {editTodo} 
+                        {duration}
+                    />
                 {/each}
             </ul>
 
@@ -108,7 +116,7 @@
 </main>
 
 <style>
-.title {
+  .title {
     font-size: var(--font-80);
     font-weight: inherit;
     text-align: center;
