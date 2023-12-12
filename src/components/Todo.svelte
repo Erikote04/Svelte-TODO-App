@@ -2,9 +2,44 @@
   export let todo;
   export let completeTodo;
   export let removeTodo;
+  export let editTodo;
+
+  let editing = false;
+
+  function toggleEdit() {
+    editing = true;
+  }
+
+  function handleEdit(e, id) {
+    let pressedKey = e.key;
+    let targetElement = e.target instanceof HTMLInputElement;
+    let newTodo = e.target.value;
+    switch(pressedKey) {
+      case 'Escape':
+        if (targetElement) {
+          e.target.blur();
+        }
+        break;
+      case 'Enter':
+        if (targetElement) {
+          editTodo(id, newTodo);
+          e.target.blur();
+        }
+        break;
+    }
+  }
+
+  function handleBlur(e, id) {
+    if (e.target instanceof HTMLInputElement) {
+      let newTodo = e.target.value;
+      editTodo(id, newTodo);
+      e.target.blur();
+      editing = false;
+    }
+  }
 </script>
 
-<li class="todo">
+<li class:editing class="todo">
     <div class="todo-item">
         <div>
             <input
@@ -20,14 +55,27 @@
                 for="todo" 
             />
         </div>
-        <span class:completed={todo.completed} class="todo-text">{todo.text}</span>
+        <span 
+          on:dblclick={toggleEdit}
+          class:completed={todo.completed} 
+          class="todo-text"
+        >{todo.text}</span>
         <button 
           on:click={() => removeTodo(todo.id)}
           aria-label="Remove todo" 
           class="remove" 
         />
     </div>
-    <!-- <input class="edit" type="text" autofocus /> -->
+    {#if editing}
+      <input 
+        on:keydown={(e) => handleEdit(e, todo.id)}
+        on:blur={(e) => handleBlur(e, todo.id)}
+        class="edit" 
+        type="text" 
+        value={todo.text}
+        autofocus 
+      />
+    {/if}
 </li>
 
 <style>
