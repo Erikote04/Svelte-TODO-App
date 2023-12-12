@@ -1,6 +1,7 @@
 <script>
 	import Todo from './Todo.svelte'
-    import AddTodo from './AddTodo.svelte';
+  import AddTodo from './AddTodo.svelte';
+  import TodosLeft from './TodosLeft.svelte';
 
     let todos = [
         { id: '1e4a59703af84', text: 'Todo 1', completed: true },
@@ -11,6 +12,7 @@
 
     // computed
     $: todosAmount = todos.length
+    $: incompleteTodos = todos.filter((todo) => !todo.completed).length
 
     // methods
     function generateRandomId() {
@@ -65,7 +67,7 @@
             </ul>
 
             <div class="actions">
-                <span class="todo-count">0 left</span>
+                <TodosLeft {incompleteTodos} />
                 <div class="filters">
                     <button class="filter">All</button>
                     <button class="filter">Active</button>
