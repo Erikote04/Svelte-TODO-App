@@ -1,8 +1,8 @@
 <script>
-    export let incompleteTodos;
+    export let incompletedTodos;
 </script>
 
 <span class="todo-count">
-    {incompleteTodos}
-    {incompleteTodos === 1 ? 'task' : 'tasks'} left
+    {incompletedTodos}
+    {incompletedTodos === 1 ? 'task' : 'tasks'} left
 </span>
