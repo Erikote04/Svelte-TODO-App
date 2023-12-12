@@ -1,8 +1,11 @@
 <script>
+  import { fade, slide } from 'svelte/transition';
+
   export let todo;
   export let completeTodo;
   export let removeTodo;
   export let editTodo;
+  export let duration;
 
   let editing = false;
 
@@ -39,7 +42,12 @@
   }
 </script>
 
-<li class:editing class="todo">
+<li 
+  in:slide={{ duration }}
+  out:fade={{ duration }}
+  class:editing 
+  class="todo"
+>
     <div class="todo-item">
         <div>
             <input

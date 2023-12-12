@@ -1,5 +1,6 @@
 <script>
-	import Todo from './Todo.svelte'
+  import { tick } from 'svelte';
+	import Todo from './Todo.svelte';
   import AddTodo from './AddTodo.svelte';
   import TodosLeft from './TodosLeft.svelte';
   import FilterTodos from './FilterTodos.svelte';
@@ -13,12 +14,14 @@
     ]
 
     let selectedFilter = 'all';
+    let filtering = false;
 
     // computed
     $: todosAmount = todos.length
     $: incompletedTodos = todos.filter((todo) => !todo.completed).length
     $: filteredTodos = filterTodos(todos, selectedFilter);
     $: completedTodos = todos.filter((todo) => todo.completed).length
+    $: duration = filtering ? 0 : 250;
 
     // methods
     function generateRandomId() {
@@ -60,8 +63,12 @@
       todos[currentTodo].text = newTodo;
     }
 
-    function setFilter(newFilter) {
+    async function setFilter(newFilter) {
+      filtering = true;
+      await tick();
       selectedFilter = newFilter;
+      await tick();
+      filtering = false;
     }
 
     function filterTodos(todos, filter) {
@@ -87,7 +94,7 @@
         {#if todosAmount}
             <ul class="todo-list">
                 {#each filteredTodos as todo (todo.id)}
-                    <Todo {todo} {completeTodo} {removeTodo} {editTodo}/>
+                    <Todo {todo} {completeTodo} {removeTodo} {editTodo} {duration}/>
                 {/each}
             </ul>
 
