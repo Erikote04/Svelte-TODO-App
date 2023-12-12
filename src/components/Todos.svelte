@@ -26,8 +26,8 @@
         todos = [...todos, newTodo]
     }
 
-    function toggleCompleted(MouseEvent) {
-        let checked = event.target instanceof HTMLInputElement
+    function toggleCompleted(e) {
+        let checked = e.target instanceof HTMLInputElement
         todos = todos.map((todo) => ({
             ...todo,
             completed: checked,
@@ -42,6 +42,10 @@
         return todo
       })
     }
+
+    function removeTodo(id) {
+      todos = todos.filter((todo) => todo.id !== id);
+    }
 </script>
 <main>
     <h1 class="title">TODO's</h1>
@@ -51,7 +55,7 @@
         {#if todosAmount}
             <ul class="todo-list">
                 {#each todos as todo (todo.id)}
-                    <Todo {todo} {completeTodo} />
+                    <Todo {todo} {completeTodo} {removeTodo}/>
                 {/each}
             </ul>
 
@@ -113,7 +117,7 @@
     box-shadow: 
       0 1px 1px hsla(0, 0%, 0%, 0.2), 0 8px 0 -3px hsl(0, 0%, 96%),
       0 9px 1px -3px hsla(0, 0%, 0%, 0.2), 0 16px 0 -6px hsl(0, 0%, 96%),
-      0 17px 2px -6px hsla(0, 0%, 0%, 0.2);
+      0 17px 2px -6px hsla(0, 0%, 0%, 0.2); 
     z-index: -1;
   }
 

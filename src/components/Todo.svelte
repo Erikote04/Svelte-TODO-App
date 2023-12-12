@@ -1,6 +1,7 @@
 <script>
   export let todo;
   export let completeTodo;
+  export let removeTodo;
 </script>
 
 <li class="todo">
@@ -20,7 +21,11 @@
             />
         </div>
         <span class:completed={todo.completed} class="todo-text">{todo.text}</span>
-        <button aria-label="Remove todo" class="remove" />
+        <button 
+          on:click={() => removeTodo(todo.id)}
+          aria-label="Remove todo" 
+          class="remove" 
+        />
     </div>
     <!-- <input class="edit" type="text" autofocus /> -->
 </li>
