@@ -1,3 +1,5 @@
+<img width="575" alt="svelte-todo-app" src="https://github.com/Erikote04/Svelte-TODO-App/assets/126704751/1a61d95e-8e3a-47a0-873e-5569862457e7">
+
 # Svelte + Vite
 
 This template should help get you started developing with Svelte in Vite.
